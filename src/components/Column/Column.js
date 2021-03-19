@@ -1,77 +1,41 @@
-import axios from 'axios';
 import React from 'react';
-// import PropTypes from "prop-types";
 import styles from './Column.module.scss';
+import DropList from './DropList/DropList'
 
 class Column extends React.Component {
 
-  // getData = async () => {
-  //   try {
-  //     const response = await fetch('http://ontariobeerapi.ca/beers/',
-  //     {
-  //       method: 'GET',
-  //       mode: 'no-cors',
-  //       Accept: "application/json"
-  //       // "Content-Type": "application/json",
-  //       //   Accept: "application/json",
-  //       // method: 'GET',
-  //       // mode: 'no-cors'
-  //     }
-      
-  //     )
-  //    console.log(response)
-      
-  //     // console.log(response)
-  //     // return response;
-  //   } catch (err) {
-  //     console.log(Error(err))
-  //   }
-    
-  // }
-
-  getBeer = () =>{
-    // fetch('http://ontariobeerapi.ca/beers/')
-    // .then(response => response.json())
-    // .then(data=>console.log(data))
-    fetch(
-      'http://ontariobeerapi.ca/beers/',
-      {
-        method: 'GET',
-        mode: 'no-cors',
-        credentials: 'include',
-        
-        
-      })
-      .then((data1)=>{
-        console.log(data1)
-        
-      })
-      
+  state = {
+    brewers: []
   }
 
-
-  getBrewer = () =>{
-    // this.getData()
-    // .then((data)=>data.json())
-    //   .then((resp)=>console.log(resp))
-    console.log(this.getData())
+  removeDuplicatedBrewers = (filteredArray) =>{
+    var brewers =[]
+    return filteredArray.filter(function(item) {
+      return brewers.hasOwnProperty(item) ? false :(brewers[item]=true)
+    })  
   }
 
   componentDidMount(){
-
-    axios.get(`http://ontariobeerapi.ca/beers/`)
-    .then(res=>console.log(res))
-
-    // fetch(`http://ontariobeerapi.ca/beers/`
-    // ,{
-    //   headers:{
-    //     'Access-Control-Allow-Origin': '*'
-    //   },
-    //   mode: 'no-cors'
-    // }
-    // // {mode:'no-cors'}
-    // )
-    // .then(r=>console.log(r))
+    var allBrewers = []
+    fetch(`http://ontariobeerapi.ca/beers/`)
+    .then((response)=>response.json())
+    .then((data)=>{
+      data.forEach(function(el){
+        allBrewers.push(el.brewer)
+      })
+    })
+    .then(
+      () => { 
+      // console.log(allBrewers)
+      console.log(this.removeDuplicatedBrewers(allBrewers))
+      this.setState({
+        brewers:this.removeDuplicatedBrewers(allBrewers)
+          })
+        }
+      )
+    .catch((error) => {
+      console.log(Error(error))
+    })
   }
 
   render(){
@@ -79,13 +43,10 @@ class Column extends React.Component {
     <>
     
         <div className={styles.wrapper}>
-            <select>
-                <option>option q</option>
-                <option>option q</option>
-            </select>
+            <DropList brewers={this.state.brewers}></DropList>
             <div>
                 <ul>
-                    <li onClick={()=>{this.getBeer()}}>piwo1</li>
+                    <li >piwo1</li>
                     <li>piwo2</li>
                     <li>piwo3</li>
                 </ul>
