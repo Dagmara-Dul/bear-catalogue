@@ -7,7 +7,6 @@ class Root extends React.Component {
     render(){
         return (
             <>
-            <h1>hello Dagmara</h1>
             <Column></Column>
             </>
         )
