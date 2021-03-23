@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Root from './Root/Root';
+// import Root from './Root/Root';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-    <Root />,
+    <App />,
   document.getElementById('root')
 );
 

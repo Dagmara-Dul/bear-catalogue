@@ -1,0 +1,32 @@
+.wrapper {
+    color: #4b4e53;
+    padding:150px;
+}
+
+.img {
+    border-radius: 50%;
+    width:40px;
+    height: 40px;
+
+}
+
+.list{
+    list-style:none;
+    padding:0;
+    font-size:12px;
+}
+
+.li {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.description{
+    width: 250px;
+}
+
+.details {
+    font-weight:bold;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Column.module.scss';
 import DropList from './DropList/DropList';
 import Button from '../Button/Button';
+import BeerList from './BeerList/BeerList';
 
 class Column extends React.Component {
 
@@ -98,12 +99,10 @@ class Column extends React.Component {
         <div className={styles.wrapper}>
             <DropList brewers={this.state.brewers} loadBeers={this.loadBeersFn} chosenBrewer={this.state.chosenBrewer}></DropList>
             <div>
-                <ul>
-                    {this.state.chosenBeers.length >0 ? this.state.chosenBeers.slice(0,this.state.beerVisible).map(function(beer){
-                      return <li key={beer.beer_id}>name: {beer.name} type: {beer.type} price: {beer.price}  <img alt="beer img" src={beer.image_url} /> </li>
-                    }):console.log("Mamy problem")}
-                </ul>
+                
+                <BeerList chosenBeers={this.state.chosenBeers} beerVisible={this.state.beerVisible}></BeerList>
                 <div>
+            
                   <Button id="loadBtn" chosenBeers={this.state.chosenBeers} loadMoreBeers={this.loadMoreBeers} btnVisibility={this.state.btnVisible}>load MORE</Button>
                 </div>
             </div>
