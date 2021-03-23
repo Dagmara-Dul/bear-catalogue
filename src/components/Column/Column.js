@@ -6,17 +6,23 @@ import BeerList from './BeerList/BeerList';
 
 class Column extends React.Component {
 
-  state = {
-    brewers: [],
-    beers:[],
-    chosenBeers:[],
-    chosenBrewer: "-- choose a brewer --",
-    beerVisible: 15,
-    btnVisible: true,
-  }
+  constructor(props){
+    super(props)
+    this.state = {
+      brewers: [],
+      beers:[],
+      chosenBeers:[],
+      chosenBrewer: "-- choose a brewer --",
+      beerVisible: 15,
+      btnVisible: true,
+    }
+
+}
+
+  
 
   loadMoreBeers = async(event) => {
-    event.preventDefault();
+    // event.preventDefault();
     try{
       await this.setState((prevState) => ({
       beerVisible: prevState.beerVisible + 15
@@ -25,7 +31,8 @@ class Column extends React.Component {
         { this.setState({btnVisible:false})}  
     }catch (err) {
     console.log(Error(err));
-  }}
+  }
+}
 
   sortAlphabetically = (dataToSort) => {
     dataToSort.sort(function(a,b){
@@ -46,7 +53,7 @@ class Column extends React.Component {
 
       if (this.state.chosenBrewer !== "-- choose a brewer --"){
         this.setState({btnVisible:true})
-        this.setState({beerVisible:15})
+        this.setState({beerVisible:this.props.numberOfBeers})
         allBeers.forEach(function(e){if(e.brewer===chosenBrewer){listOfBeers.push(e)}})
         // console.log(listOfBeers)
         this.sortAlphabetically(listOfBeers)
@@ -68,7 +75,10 @@ class Column extends React.Component {
     })  
   }
 
+
+
   componentDidMount(){
+    this.state.beerVisible !== this.props.numberOfBeers ? this.setState({beerVisible:this.props.numberOfBeers}) : console.log('daga')
     var allBrewers = []
     fetch(`http://ontariobeerapi.ca/beers/`)
     .then((response)=>response.json())
@@ -91,6 +101,7 @@ class Column extends React.Component {
     })
   }
 
+  
 
   render(){
   return(
@@ -100,6 +111,7 @@ class Column extends React.Component {
             <DropList brewers={this.state.brewers} loadBeers={this.loadBeersFn} chosenBrewer={this.state.chosenBrewer}></DropList>
             <div>
                 
+                {/* <BeerList chosenBeers={this.state.chosenBeers} beerVisible={this.state.beerVisible}></BeerList> */}
                 <BeerList chosenBeers={this.state.chosenBeers} beerVisible={this.state.beerVisible}></BeerList>
                 <div>
             
