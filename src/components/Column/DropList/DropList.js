@@ -12,13 +12,11 @@ const DropList = ({ children, brewers, loadBeers, chosenBrewer, ...props }) => {
             <option value ="-- choose a brewer --" className={styles.option}>-- choose a brewer --</option>
             {
             brewers.length > 0 ? brewers.map((element) => {
-                // var value =`"${element}"`
-                // console.log(value)
                 return(
-                <option key={element} value={element} >{element}</option>
+                <option className={styles.option} key={element} value={element} >{element}</option>
                 )
             }
-            ):console.log("Brak browarów do wyświetlenia")}
+            ):console.log("loading brewers...")}
                 
         </select>
   </>

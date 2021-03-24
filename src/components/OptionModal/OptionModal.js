@@ -1,16 +1,14 @@
 import React from 'react';
 import styles from './OptionModal.module.scss';
+import Button from '../Button/Button'
 
 
-const OptionModal = ( { closeModalFn, handleOptionChange, darkModeChecked, handleDarkMode, handleNumberChange, ...props }) => (
+const OptionModal = ( { closeModalFn, handleOptionChange, darkModeChecked, handleDarkMode, handleNumberChange, sortBy, ...props }) => (
 
-    // function handleOptionChange(e){
-    //     e.preventDefault();
-    // }
 
     <div className={styles.bodyModal}>
         <div className={styles.wrapper}>
-            <button className={styles.button} onClick={closeModalFn} >close</button>
+            <Button onClick={closeModalFn} >close</Button>
             <form onSubmit={handleOptionChange}>
                 <label>
                     <input type="checkbox" checked={darkModeChecked} onChange={()=>{handleDarkMode()}}/>
@@ -26,11 +24,13 @@ const OptionModal = ( { closeModalFn, handleOptionChange, darkModeChecked, handl
                     <label htmlFor="30">30</label>
                 </div>
                 <div className={styles.sortBy }>
-                    <select>
-                        <option></option>
+                    <select className={styles.select} onChange={sortBy}>
+                        <option className={styles.option}>-- sort by --</option>
+                        <option className={styles.option} value="name">name</option>
+                        <option className={styles.option} value="price">price</option>
+                        <option className={styles.option} value="type">type</option>
                     </select>
                 </div>
-                <button className={styles.button} type="submit">submit</button>
             </form>
         </div>
     </div>

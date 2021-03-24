@@ -12,3 +12,8 @@ body {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
+
+#root {
+  padding:50px 50px;
+  
+}

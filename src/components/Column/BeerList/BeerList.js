@@ -21,7 +21,7 @@ const BeerList = ({ children, chosenBeers, beerVisible, ...props })=>{
                                 alt="beer img"
                                 />
                             </li>
-                }):console.log("Mamy problem")}
+                }):console.log("There is a problem with brewers loader")}
             </ul>
         </>
     )
