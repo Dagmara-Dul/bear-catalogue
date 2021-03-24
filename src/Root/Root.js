@@ -2,6 +2,7 @@ import React from 'react';
 import OptionModal from '../components/OptionModal/OptionModal';
 import Column from '../components/Column/Column';
 import Button from '../components/Button/Button';
+import styles from './Root.module.scss';
 
 
 
@@ -73,7 +74,11 @@ class Root extends React.Component {
             />}
             
             <Button onClick={this.openModal}>options</Button>
-            <Column numberOfBeers={this.state.numberOfBeers} sortBy={this.state.sortBy}></Column>
+            <div className={styles.columnsBox}>
+                <Column numberOfBeers={this.state.numberOfBeers} sortBy={this.state.sortBy}></Column>
+                <Column numberOfBeers={this.state.numberOfBeers} sortBy={this.state.sortBy}></Column>
+                <Column numberOfBeers={this.state.numberOfBeers} sortBy={this.state.sortBy}></Column>
+            </div>
             
             </>
         )

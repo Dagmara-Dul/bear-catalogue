@@ -24,11 +24,11 @@ const OptionModal = ( { closeModalFn, handleOptionChange, darkModeChecked, handl
                     <label htmlFor="30">30</label>
                 </div>
                 <div className={styles.sortBy }>
-                    <select onChange={sortBy}>
-                        <option>--sort by--</option>
-                        <option value="name">name</option>
-                        <option value="price">price</option>
-                        <option value="type">type</option>
+                    <select className={styles.select} onChange={sortBy}>
+                        <option className={styles.option}>-- sort by --</option>
+                        <option className={styles.option} value="name">name</option>
+                        <option className={styles.option} value="price">price</option>
+                        <option className={styles.option} value="type">type</option>
                     </select>
                 </div>
             </form>
