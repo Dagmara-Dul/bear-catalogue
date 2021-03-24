@@ -33,8 +33,8 @@ class Root extends React.Component {
     }
 
 
-    handleDarkModeFn = () =>{
-        this.state.darkModeChecked ? this.setState({darkModeChecked:false}) : this.setState({darkModeChecked:true})
+    handleDarkModeFn = () => {
+        this.state.darkModeChecked ? this.setState({ darkModeChecked:false }) : this.setState({ darkModeChecked:true })
         this.props.themeToggler();
     }
 
@@ -58,6 +58,32 @@ class Root extends React.Component {
         }catch (err) {
             console.log(Error(err));
         }
+    }
+
+    setStorage = () => {
+        var darkMode = this.state.darkModeChecked
+        console.log(darkMode)
+        // var isDarkMode = {darkModeChecked: darkMode}
+        // console.log(isDarkMode)
+        localStorage.setItem('darkModeChecked', darkMode)
+    }
+
+    getDarkMode = () => {
+        console.log(localStorage)
+        var data = localStorage.getItem('darkModeChecked')
+        console.log(data)
+        // this.setStorage()
+        this.setState({darkModeChecked:localStorage.darkMode})
+    }
+
+    componentDidMount(){
+        this.getDarkMode();
+        window.addEventListener("beforeunload", this.setStorage);
+    }
+    
+    componentWillUnmount() {
+        
+        window.removeEventListener("beforeunload", this.setStorage);
     }
 
     render(){
