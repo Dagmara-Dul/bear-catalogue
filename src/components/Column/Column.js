@@ -17,7 +17,6 @@ class Column extends React.Component {
       btnVisible: true,
       sortBy: 'name'
     }
-
 }
 
   
