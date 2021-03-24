@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Column.module.scss';
 import DropList from './DropList/DropList';
-import Button from '../Button/Button';
+import Button from './LoadButton/LoadButton';
 import BeerList from './BeerList/BeerList';
 
 class Column extends React.Component {
@@ -15,14 +15,15 @@ class Column extends React.Component {
       chosenBrewer: "-- choose a brewer --",
       beerVisible: 15,
       btnVisible: true,
+      sortBy: 'name'
     }
 
 }
 
   
 
-  loadMoreBeers = async(event) => {
-    // event.preventDefault();
+  loadMoreBeers = async() => {
+    
     try{
       await this.setState((prevState) => ({
       beerVisible: prevState.beerVisible + 15
@@ -34,12 +35,20 @@ class Column extends React.Component {
   }
 }
 
-  sortAlphabetically = (dataToSort) => {
-    dataToSort.sort(function(a,b){
-      if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-      if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-      return 0;
-    })
+  sort = async(dataToSort,sortByItem) => {
+    try{
+      await this.setState({sortBy:this.props.sortBy}) 
+      
+      dataToSort.sort(function(a,b){
+        
+        if(a[`${sortByItem}`].toLowerCase() < b[`${sortByItem}`].toLowerCase()) return -1;
+        if(a[`${sortByItem}`].toLowerCase() > b[`${sortByItem}`].toLowerCase()) return 1;
+        
+        return 0;
+      })
+    } catch (err) {
+      console.log(Error(err));
+    }
   }
 
   loadBeersFn = async(e) =>{
@@ -55,8 +64,8 @@ class Column extends React.Component {
         this.setState({btnVisible:true})
         this.setState({beerVisible:this.props.numberOfBeers})
         allBeers.forEach(function(e){if(e.brewer===chosenBrewer){listOfBeers.push(e)}})
-        // console.log(listOfBeers)
-        this.sortAlphabetically(listOfBeers)
+        
+        this.sort(listOfBeers,this.props.sortBy)
         this.setState({chosenBeers : listOfBeers})
    
       }else{
@@ -78,12 +87,15 @@ class Column extends React.Component {
 
 
   componentDidMount(){
-    this.state.beerVisible !== this.props.numberOfBeers ? this.setState({beerVisible:this.props.numberOfBeers}) : console.log('daga')
+    // this.state.beerVisible !== this.props.numberOfBeers ? this.setState({beerVisible:this.props.numberOfBeers}) : console.log('')
+    if(this.beerVisible !== this.props.numberOfBeers){
+      this.setState({beerVisible:this.props.numberOfBeers}) 
+    }
     var allBrewers = []
     fetch(`http://ontariobeerapi.ca/beers/`)
     .then((response)=>response.json())
     .then((data)=>{
-      // console.log(data)
+      
       this.setState({beers:data})
       data.forEach(function(el){
         allBrewers.push(el.brewer)
@@ -110,8 +122,6 @@ class Column extends React.Component {
         <div className={styles.wrapper}>
             <DropList brewers={this.state.brewers} loadBeers={this.loadBeersFn} chosenBrewer={this.state.chosenBrewer}></DropList>
             <div>
-                
-                {/* <BeerList chosenBeers={this.state.chosenBeers} beerVisible={this.state.beerVisible}></BeerList> */}
                 <BeerList chosenBeers={this.state.chosenBeers} beerVisible={this.state.beerVisible}></BeerList>
                 <div>
             
